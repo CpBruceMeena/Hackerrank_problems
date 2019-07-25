@@ -94,6 +94,7 @@ vector<vector<int>> swapNodes(vector<vector<int>> indexes, vector<int> queries) 
     for(int i = 0; i<queries.size(); i++){
         vector<int> upload;
         int temp = queries[i];
+        int t = temp;
         while(temp < h){
             vector<int> front;
             swap(root, temp, front);
@@ -102,7 +103,7 @@ vector<vector<int>> swapNodes(vector<vector<int>> indexes, vector<int> queries) 
             }
         //    print(root);
         //    cout<<endl;
-            temp = temp*2;
+            temp += t;
         }
         printInorder(root, upload);
         result.push_back(upload);
