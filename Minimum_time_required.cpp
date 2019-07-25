@@ -1,27 +1,33 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
 vector<string> split_string(string);
 
+long long getTotal(vector<long int> machines, long long int middle){
+    long long ans = 0;
+    for(int i = 0; i<machines.size(); i++){
+        ans += middle/machines[i];
+    }
+    return ans;
+}
+
 // Complete the minTime function below.
 long minTime(vector<long> machines, long goal) {
     sort(machines.begin(), machines.end());
-    long long int current = 0;
-    long long int n = machines.size();
-    long long int day = machines[0];
-    while(current != goal){
-        int i = 0;
-        while((i < n) and (machines[i] <= day) and (current < goal)){
-           if(day % machines[i] == 0){
-               current += 1;
-           } 
-           i++;
+    float n = machines.size();
+    double u = (double)(n/machines[n-1]);
+    double l = (float)(n*1.0)/(machines[0]*(1.0));
+    long long int lower_bound = goal/l;
+    long long int upper_bound = goal/u + 1;
+    while(lower_bound < upper_bound){
+        long long int middle = (lower_bound + upper_bound)/2;
+        long long int days = getTotal(machines, middle);
+        if(days < goal){
+            lower_bound = middle+1;
         }
-        if(current == goal) return day;
-        day++;
+        else upper_bound = middle;
     }
-    return day;
+    return lower_bound;
 }
 
 int main()
