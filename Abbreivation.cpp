@@ -1,34 +1,23 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
 // Complete the abbreviation function below.
 string abbreviation(string a, string b) {
     if(a.size() < b.size()) return("NO");
-    int i = 0, j = 0;
-    while(i != a.size() and j != b.size()){
-        if(a[i] != b[j]){
-            if(isupper(a[i])){
-    //            cout<<a[i]<<" "<<b[j]<<endl;
-                return("NO"); 
-            } 
-            else if(toupper(a[i]) == b[j]){
-                while(toupper(a[i]) == a[i+1] and i+1 < a.size()) i++;
-                i++, j++;
-            }
-            else if(i+1 == a.size()) return("NO");
-            else i++;
-        }
-        else if(a[i] == b[j]){
-            i++, j++;
+    int n = a.size();
+    int m = b.size();
+    bool dp[n+1][m+1];
+    memset(dp, false, sizeof(dp));
+    dp[0][0] = true;
+    for(int i = 0; i<n; i++){
+        for(int j = 0; j<=m; j++){
+            if(!dp[i][j]) continue;
+            if(!isupper(a[i])) dp[i+1][j] = 1;
+            if(j<m and toupper(a[i]) == b[j]) dp[i+1][j+1] = 1;
         }
     }
-    if(j != b.size()) return("NO");
-    while(i != a.size()){
-        if(isupper(a[i])) return("NO");
-        i++;
-    }
-    return("YES");
+    if(dp[n][m]) return("YES");
+    else return("NO");
 }
 
 int main()
