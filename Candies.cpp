@@ -17,7 +17,7 @@ long candies(int n, vector<int> arr) {
                 temp[j-1] = temp[j] + 1;
                 j--;
             }
-            i = k-1;
+            i = k;
         }
         else if(arr[i] < arr[i+1]){
             while(arr[i] < arr[i+1] and i+1 < n){
@@ -29,19 +29,20 @@ long candies(int n, vector<int> arr) {
             continue;
         }
     }
+
     if(arr[n-1] > arr[n-2]) temp[n-1] = temp[n-2] + 1;
 //    else temp[n-1] = temp[n-2] - 1;
 
     for(int i = 0; i<n ;i++){
         if(arr[i] == arr[i+1]){       
             int j = i;
-            while(arr[j] == arr[j+1]){
+            while(arr[j] == arr[j+1] and j + 1 < n){
                 j++;
             }
-            j--;
-            for(int k = i+1; k<=j-1; k++){
+            for(int k = i+1; k<j; k++){
                 if(temp[k-1] == 1) temp[k] = 2;
             }
+            i = j;
         }
     }
 
