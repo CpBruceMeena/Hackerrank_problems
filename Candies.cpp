@@ -1,51 +1,37 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
+long long max(int a, int b){
+    return(a>=b?a:b);
+}
+
 // Complete the candies function below.
-long candies(int n, vector<int> arr) {
+long candies(int n, vector<int> arr) 
     long long int temp[n];
-    for(int i = 0; i<n ;i++) temp[i] = 1;
+    long long int first[n], back[n];
+
+    for(int i = 0; i<n ;i++){
+        first[i] = 1;
+        back[i] = 1;   
+    }
+
     for(int i = 0; i<n-1; i++){
-        if(arr[i] > arr[i+1]){
-            int j = i;
-            while(arr[j] > arr[j+1] and j+1 < n){
-                j++;
-            }
-            int k = j;
-            while(j != i){
-                temp[j-1] = temp[j] + 1;
-                j--;
-            }
-            i = k;
+        if(arr[i] < arr[i+1]){
+            first[i+1] = first[i] + 1;
         }
-        else if(arr[i] < arr[i+1]){
-            while(arr[i] < arr[i+1] and i+1 < n){
-                temp[i+1]  = temp[i] + 1;
-                i++;
-            }
+    }
+
+    for(int i = n-1; i>0; i--){
+        if(arr[i] < arr[i-1]){
+            back[i-1] = back[i] + 1;
         }
-        else if(arr[i] == arr[i+1]){
-            continue;
-        }
+    }
+
+    for(int i = 0; i<n; i++){
+        temp[i] = max(first[i], back[i]);
     }
 
     if(arr[n-1] > arr[n-2]) temp[n-1] = temp[n-2] + 1;
-//    else temp[n-1] = temp[n-2] - 1;
-
-    for(int i = 0; i<n ;i++){
-        if(arr[i] == arr[i+1]){       
-            int j = i;
-            while(arr[j] == arr[j+1] and j + 1 < n){
-                j++;
-            }
-            for(int k = i+1; k<j; k++){
-                if(temp[k-1] == 1) temp[k] = 2;
-            }
-            i = j;
-        }
-    }
-
     long long ans = 0;
     for(int i = 0; i<n; i++){
         ans += temp[i];
