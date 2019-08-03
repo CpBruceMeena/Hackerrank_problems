@@ -30,6 +30,40 @@ int poisonousPlants(vector<int> p) {
     }
 }
 
+void print(vector<int> prev){
+    int i = 0;
+    while(i != prev.size()){
+        cout<<prev[i]<<" ";
+        i++;
+    }
+    cout<<endl;
+}
+
+int poisonousPlants1(vector<int> p) {
+    int ans = 0;
+    if(p.size() == 1) return(0);
+    bool flag = 0;
+    vector<vector<int>> temp;
+    temp.push_back(p);
+    int i = 0;
+    while(true){
+        vector<int> prev;
+        for(int j = temp[i].size()-1; j>0; j--){
+            if(temp[i][j] <= temp[i][j-1]){
+                prev.push_back(temp[i][j]);
+            }
+            else flag = 1;
+        }
+        if(flag) ans+=1;
+        if(flag == 0) return ans;
+        flag = 0;
+        prev.push_back(temp[i][0]);
+        reverse(prev.begin(), prev.end());
+        i+=1;
+        temp.push_back(prev);
+    }
+}
+
 int main()
 {
     ofstream fout(getenv("OUTPUT_PATH"));
