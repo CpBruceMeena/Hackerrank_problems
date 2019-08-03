@@ -4,7 +4,7 @@ using namespace std;
 
 vector<string> split_string(string);
 
-long long getmin(vector<long> arr, int i , int j){
+long long getMin(vector<long> arr, int i , int j){
     long long ans = INT_MAX;
     for(int k = i; k<=j; k++){
         if(arr[k] < ans) ans = arr[k];
@@ -13,16 +13,42 @@ long long getmin(vector<long> arr, int i , int j){
 }
 
 // Complete the riddle function below.
-vector<long> riddle(vector<long> arr) {
+//The below solution is a naive solution i.e., bruce force approach.
+vector<long> riddle1(vector<long> arr) {
     vector<long> result;
     int n = arr.size();
     for(int len = 0; len<n; len++){
         long long int temp = INT_MIN;
         for(int i = 0; i<n-len; i++){
-            long long int l = getmin(arr, i, i+len);
+            long long int l = getMin(arr, i, i+len);
             temp = max(l, temp);
         }
         result.push_back(temp);
+    }
+    return result;
+}
+
+long long getMax(vector<long> current){
+    long long ans = 0;
+    for(int i = 0; i<current.size(); i++){
+        if(current[i] > ans) ans = current[i];
+    }
+    return ans;
+}
+
+vector<long> riddle(vector<long> current) {
+    vector<long> result;
+    int n = current.size();
+    long long ans = getMax(current);
+    result.push_back(ans);
+    for(int len = 1; len<n; len++){
+        long long temp, val = INT_MIN;
+        for(int i = 0; i<n-len; i++){
+            temp = min(current[i], current[i+1]);
+            val =  max(temp, val);
+            current[i] = temp;
+        }
+        result.push_back(val);
     }
     return result;
 }
