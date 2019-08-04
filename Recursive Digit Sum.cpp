@@ -6,7 +6,7 @@ vector<string> split_string(string);
 
 // Complete the superDigit function below.
 int superDigit(string t, int k) {
-    int n = 0;
+    long long int n = 0;
     for(int j = 0; j<t.size(); j++){
             n += (t[j]-'0');
     }
